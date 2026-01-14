@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Группа ПИ-21-1 | ИРГУПС</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -31,6 +31,8 @@
             --radius-lg: 16px;
             --radius-xl: 24px;
             --transition: all 0.25s ease;
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
             --safe-area-inset-top: env(safe-area-inset-top);
             --safe-area-inset-bottom: env(safe-area-inset-bottom);
         }
@@ -53,14 +55,218 @@
             color: var(--text-primary);
             line-height: 1.5;
             min-height: 100vh;
-            padding-top: var(--safe-area-inset-top);
-            padding-bottom: var(--safe-area-inset-bottom);
+            display: flex;
             position: relative;
+        }
+        
+        /* Сайдбар для ПК */
+        .pc-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+            overflow-y: auto;
             overflow-x: hidden;
+        }
+        
+        .pc-sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+        
+        .pc-sidebar.collapsed .logo-text,
+        .pc-sidebar.collapsed .nav-title,
+        .pc-sidebar.collapsed .nav-link span,
+        .pc-sidebar.collapsed .user-info,
+        .pc-sidebar.collapsed .toggle-sidebar span {
+            display: none;
+        }
+        
+        .pc-sidebar.collapsed .logo-section {
+            justify-content: center;
+            padding: 24px 12px;
+        }
+        
+        .pc-sidebar.collapsed .nav-link {
+            justify-content: center;
+            padding: 14px;
+        }
+        
+        .pc-sidebar.collapsed .user-section {
+            justify-content: center;
+            padding: 20px 12px;
+        }
+        
+        .logo-section {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        
+        .university-short {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 16px;
+            line-height: 1.2;
+        }
+        
+        .group-name {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        
+        .nav-section {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+        
+        .nav-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            padding: 0 20px 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+        
+        .nav-list {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 4px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            white-space: nowrap;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(129, 199, 132, 0.08);
+            color: var(--primary);
+        }
+        
+        .nav-link.active {
+            background-color: rgba(129, 199, 132, 0.12);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+        
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .user-section {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        
+        .user-info {
+            flex: 1;
+            min-width: 0;
+            transition: var(--transition);
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        
+        .toggle-sidebar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .toggle-sidebar:hover {
+            background-color: rgba(129, 199, 132, 0.08);
+        }
+        
+        .toggle-sidebar span {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
         }
         
         /* Мобильная верхняя панель */
         .mobile-header {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -68,7 +274,6 @@
             background-color: var(--surface);
             border-bottom: 1px solid var(--border);
             padding: 12px 16px;
-            display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
@@ -304,7 +509,7 @@
             border-radius: var(--radius-md);
         }
         
-        /* Оверлей для меню */
+        /* Оверлей для меню (исправленный) */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -317,61 +522,121 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
         }
         
         .menu-overlay.active {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto;
         }
         
         /* Основной контент */
         .main-content {
-            padding: 76px 16px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 32px;
+            transition: var(--transition);
+            min-height: 100vh;
+            width: calc(100% - var(--sidebar-width));
+        }
+        
+        .main-content.sidebar-collapsed {
+            margin-left: var(--sidebar-collapsed-width);
+            width: calc(100% - var(--sidebar-collapsed-width));
+        }
+        
+        .main-content.sidebar-hidden {
+            margin-left: 0;
             width: 100%;
         }
         
-        /* Поиск на главной */
-        .mobile-search-container {
-            margin-bottom: 20px;
+        /* Верхняя панель для ПК */
+        .topbar {
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .search-container {
             position: relative;
         }
         
-        .mobile-search-input {
-            width: 100%;
-            padding: 16px 16px 16px 48px;
+        .search-input {
+            padding: 10px 16px 10px 42px;
             border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            background-color: var(--surface);
-            font-size: 16px;
+            border-radius: var(--radius-md);
+            background-color: var(--background);
+            font-size: 14px;
+            width: 280px;
             transition: var(--transition);
-            -webkit-appearance: none;
         }
         
-        .mobile-search-input:focus {
+        .search-input:focus {
             outline: none;
             border-color: var(--primary-light);
             box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
         }
         
-        .mobile-search-icon {
+        .search-icon {
             position: absolute;
-            left: 16px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-tertiary);
-            font-size: 18px;
+            font-size: 16px;
         }
         
-        /* Быстрые действия для мобильных */
-        .quick-actions-mobile {
-            margin-bottom: 24px;
+        .notification-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
         }
         
-        .section-title-mobile {
+        .notification-btn:hover {
+            background-color: rgba(129, 199, 132, 0.08);
+            color: var(--primary);
+        }
+        
+        /* Контент страницы */
+        .page-content {
+            max-width: 1200px;
+        }
+        
+        /* Быстрые действия */
+        .quick-actions {
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 16px;
             display: flex;
@@ -379,7 +644,7 @@
             justify-content: space-between;
         }
         
-        .section-link-mobile {
+        .section-link {
             font-size: 14px;
             color: var(--primary);
             text-decoration: none;
@@ -389,16 +654,20 @@
             gap: 6px;
         }
         
-        .actions-grid-mobile {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+        .section-link:hover {
+            text-decoration: underline;
         }
         
-        .action-card-mobile {
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        
+        .action-card {
             background-color: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 20px 16px;
+            border-radius: var(--radius-md);
+            padding: 20px;
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
             transition: var(--transition);
@@ -406,20 +675,15 @@
             text-decoration: none;
             color: inherit;
             display: block;
-            position: relative;
-            min-height: 120px;
         }
         
-        .action-card-mobile:active {
-            transform: scale(0.98);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .action-card-mobile:hover {
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
             border-color: var(--primary-light);
         }
         
-        .action-icon-mobile {
+        .action-icon {
             width: 48px;
             height: 48px;
             border-radius: var(--radius-md);
@@ -427,111 +691,106 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             font-size: 22px;
             color: var(--primary);
         }
         
-        .action-title-mobile {
+        .action-title {
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
             font-size: 16px;
-            line-height: 1.3;
         }
         
-        .action-desc-mobile {
-            font-size: 13px;
+        .action-desc {
+            font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.4;
         }
         
-        /* Информационные карточки для мобильных */
-        .info-grid-mobile {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 24px;
+        /* Информационные карточки */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
         }
         
-        .info-card-mobile {
+        .info-card {
             background-color: var(--surface);
             border-radius: var(--radius-lg);
-            padding: 20px;
+            padding: 24px;
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
         }
         
-        .info-card-header-mobile {
+        .info-card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         
-        .info-card-title-mobile {
+        .info-card-title {
             font-weight: 600;
-            font-size: 17px;
+            font-size: 16px;
             color: var(--text-primary);
         }
         
-        .info-card-badge-mobile {
+        .info-card-badge {
             background-color: rgba(129, 199, 132, 0.1);
             color: var(--primary);
             font-size: 12px;
             font-weight: 600;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
         }
         
-        .schedule-item-mobile {
+        .schedule-item {
             display: flex;
-            padding: 14px 0;
+            padding: 16px 0;
             border-bottom: 1px solid var(--border);
         }
         
-        .schedule-item-mobile:last-child {
+        .schedule-item:last-child {
             border-bottom: none;
         }
         
-        .schedule-time-mobile {
+        .schedule-time {
             font-weight: 600;
             color: var(--text-primary);
             min-width: 100px;
             font-size: 14px;
-            flex-shrink: 0;
         }
         
-        .schedule-details-mobile {
+        .schedule-details {
             flex: 1;
-            min-width: 0;
         }
         
-        .schedule-subject-mobile {
+        .schedule-subject {
             font-weight: 600;
             margin-bottom: 4px;
             font-size: 15px;
-            line-height: 1.3;
         }
         
-        .schedule-teacher-mobile {
+        .schedule-teacher {
             font-size: 13px;
             color: var(--text-tertiary);
-            margin-bottom: 2px;
         }
         
-        .schedule-room-mobile {
+        .schedule-room {
             font-size: 13px;
             color: var(--primary);
             font-weight: 500;
         }
         
-        .group-list-mobile {
+        .group-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
         
-        .group-member-mobile {
+        .group-member {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -540,13 +799,13 @@
             transition: var(--transition);
         }
         
-        .group-member-mobile:active {
+        .group-member:hover {
             background-color: rgba(129, 199, 132, 0.05);
         }
         
-        .member-avatar-mobile {
-            width: 44px;
-            height: 44px;
+        .member-avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             display: flex;
@@ -554,419 +813,607 @@
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             flex-shrink: 0;
         }
         
-        .member-info-mobile {
+        .member-info {
             flex: 1;
-            min-width: 0;
         }
         
-        .member-name-mobile {
+        .member-name {
             font-weight: 500;
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         
-        .member-role-mobile {
-            font-size: 13px;
+        .member-role {
+            font-size: 12px;
             color: var(--text-tertiary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         
-        .member-status-mobile {
-            width: 12px;
-            height: 12px;
+        .member-status {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background-color: var(--success);
-            flex-shrink: 0;
         }
         
-        .member-status-mobile.offline {
+        .member-status.offline {
             background-color: var(--text-tertiary);
         }
         
-        /* Последние новости для мобильных */
-        .news-section-mobile {
-            background-color: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-            margin-bottom: 24px;
-        }
-        
-        .news-item-mobile {
-            padding: 16px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .news-item-mobile:last-child {
-            border-bottom: none;
-        }
-        
-        .news-title-mobile {
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        
-        .news-badge-mobile {
-            font-size: 11px;
-            background-color: rgba(33, 150, 243, 0.1);
-            color: var(--info);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-        
-        .news-date-mobile {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            margin-bottom: 8px;
-        }
-        
-        .news-text-mobile {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-        
-        /* Календарь для мобильных */
-        .calendar-section-mobile {
-            background-color: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-        }
-        
-        .calendar-header-mobile {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-        
-        .calendar-nav-mobile {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .calendar-btn-mobile {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-sm);
-            background: none;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            -webkit-appearance: none;
-        }
-        
-        .calendar-btn-mobile:active {
-            background-color: rgba(129, 199, 132, 0.1);
-            color: var(--primary);
-        }
-        
-        .calendar-current-mobile {
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            min-width: 140px;
-        }
-        
-        .calendar-grid-mobile {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-        }
-        
-        .calendar-day-mobile {
-            text-align: center;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            padding: 8px 0;
-        }
-        
-        .calendar-date-mobile {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-sm);
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-        
-        .calendar-date-mobile:active {
-            background-color: rgba(129, 199, 132, 0.1);
-        }
-        
-        .calendar-date-mobile.current {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .calendar-date-mobile.event::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background-color: var(--primary);
-        }
-        
-        /* Нижняя навигация для мобильных */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--surface);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 1000;
-            padding-bottom: calc(8px + var(--safe-area-inset-bottom));
-        }
-        
-        .bottom-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-tertiary);
-            padding: 8px 12px;
-            border-radius: var(--radius-md);
-            transition: var(--transition);
-            flex: 1;
-            max-width: 80px;
-        }
-        
-        .bottom-nav-item:active {
-            background-color: rgba(129, 199, 132, 0.1);
-        }
-        
-        .bottom-nav-item.active {
-            color: var(--primary);
-        }
-        
-        .bottom-nav-icon {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-        
-        .bottom-nav-label {
-            font-size: 11px;
-            font-weight: 500;
-        }
-        
-        /* Плавающая кнопка действий */
+        /* Адаптация для мобильных */
+        .mobile-search-container,
+        .quick-actions-mobile,
+        .info-grid-mobile,
+        .news-section-mobile,
+        .calendar-section-mobile,
+        .bottom-nav,
         .fab {
+            display: none;
+        }
+        
+        /* Уведомления */
+        .notification {
             position: fixed;
-            bottom: 80px;
+            top: 20px;
             right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            background: var(--primary);
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: var(--shadow-lg);
-            cursor: pointer;
-            z-index: 999;
-            border: none;
-            transition: var(--transition);
-        }
-        
-        .fab:active {
-            transform: scale(0.95);
-            box-shadow: var(--shadow-md);
-        }
-        
-        /* Уведомления для мобильных */
-        .mobile-notification {
-            position: fixed;
-            top: 80px;
-            left: 16px;
-            right: 16px;
-            background-color: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 16px;
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
             z-index: 3000;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 12px;
-            transform: translateY(-100px);
-            opacity: 0;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-            border: 1px solid var(--border);
+            transform: translateX(400px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .mobile-notification.active {
-            transform: translateY(0);
-            opacity: 1;
+        .notification.active {
+            transform: translateX(0);
         }
         
-        .mobile-notification-icon {
+        .notification-icon {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background-color: rgba(76, 175, 80, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
             font-size: 18px;
-            flex-shrink: 0;
         }
         
-        .mobile-notification-content {
-            flex: 1;
-        }
-        
-        .mobile-notification-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-            font-size: 15px;
-        }
-        
-        .mobile-notification-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        /* Адаптивность для планшетов */
-        @media (min-width: 768px) {
-            .main-content {
-                padding: 86px 24px 30px;
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .pc-sidebar {
+                transform: translateX(-100%);
+                width: 300px;
             }
             
-            .actions-grid-mobile {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 16px;
-            }
-            
-            .action-card-mobile {
-                min-height: 140px;
-                padding: 24px 20px;
-            }
-            
-            .mobile-header {
-                padding: 16px 24px;
-                height: 70px;
-                padding-top: calc(16px + var(--safe-area-inset-top));
+            .pc-sidebar.active {
+                transform: translateX(0);
             }
             
             .main-content {
-                padding-top: 86px;
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
             }
             
-            .bottom-nav {
-                display: none;
-            }
-        }
-        
-        /* Адаптивность для десктопов */
-        @media (min-width: 1024px) {
             .mobile-header {
-                display: none;
-            }
-            
-            .bottom-nav {
-                display: none;
-            }
-            
-            body {
                 display: flex;
             }
             
-            .desktop-sidebar {
-                display: block;
-                width: 260px;
-                background-color: var(--surface);
-                border-right: 1px solid var(--border);
-                height: 100vh;
-                position: fixed;
-                left: 0;
-                top: 0;
-                overflow-y: auto;
-                z-index: 100;
+            .topbar {
+                display: none;
             }
             
-            .main-content {
-                margin-left: 260px;
-                padding: 32px;
-                padding-top: 32px;
-                width: calc(100% - 260px);
+            .page-content {
+                padding-top: 60px;
             }
-        }
-        
-        /* Улучшения для iOS */
-        @supports (-webkit-touch-callout: none) {
-            .mobile-search-input,
-            .mobile-nav-link,
-            .action-card-mobile,
-            .calendar-btn-mobile,
-            .bottom-nav-item {
+            
+            /* Показываем мобильные элементы */
+            .mobile-search-container {
+                display: block;
+                margin-bottom: 20px;
+                position: relative;
+            }
+            
+            .mobile-search-input {
+                width: 100%;
+                padding: 16px 16px 16px 48px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                background-color: var(--surface);
+                font-size: 16px;
+                transition: var(--transition);
+            }
+            
+            .mobile-search-icon {
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-tertiary);
+                font-size: 18px;
+            }
+            
+            .quick-actions-mobile {
+                display: block;
+                margin-bottom: 24px;
+            }
+            
+            .section-title-mobile {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .section-link-mobile {
+                font-size: 14px;
+                color: var(--primary);
+                text-decoration: none;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            
+            .actions-grid-mobile {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .action-card-mobile {
+                background-color: var(--surface);
+                border-radius: var(--radius-lg);
+                padding: 20px 16px;
+                box-shadow: var(--shadow-sm);
+                border: 1px solid var(--border);
+                transition: var(--transition);
+                cursor: pointer;
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                min-height: 120px;
+            }
+            
+            .action-card-mobile:active {
+                transform: scale(0.98);
+            }
+            
+            .action-icon-mobile {
+                width: 48px;
+                height: 48px;
+                border-radius: var(--radius-md);
+                background-color: rgba(129, 199, 132, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 12px;
+                font-size: 22px;
+                color: var(--primary);
+            }
+            
+            .action-title-mobile {
+                font-weight: 600;
+                margin-bottom: 4px;
+                font-size: 16px;
+            }
+            
+            .action-desc-mobile {
+                font-size: 13px;
+                color: var(--text-secondary);
+            }
+            
+            .info-grid-mobile {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+            
+            .info-card-mobile {
+                background-color: var(--surface);
+                border-radius: var(--radius-lg);
+                padding: 20px;
+                box-shadow: var(--shadow-sm);
+                border: 1px solid var(--border);
+            }
+            
+            .info-card-header-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 16px;
+            }
+            
+            .info-card-title-mobile {
+                font-weight: 600;
+                font-size: 17px;
+                color: var(--text-primary);
+            }
+            
+            .info-card-badge-mobile {
+                background-color: rgba(129, 199, 132, 0.1);
+                color: var(--primary);
+                font-size: 12px;
+                font-weight: 600;
+                padding: 4px 10px;
+                border-radius: 20px;
+            }
+            
+            .schedule-item-mobile {
+                display: flex;
+                padding: 14px 0;
+                border-bottom: 1px solid var(--border);
+            }
+            
+            .schedule-time-mobile {
+                font-weight: 600;
+                color: var(--text-primary);
+                min-width: 80px;
+                font-size: 14px;
+            }
+            
+            .schedule-subject-mobile {
+                font-weight: 600;
+                margin-bottom: 4px;
+                font-size: 15px;
+            }
+            
+            .schedule-teacher-mobile {
+                font-size: 13px;
+                color: var(--text-tertiary);
+            }
+            
+            .schedule-room-mobile {
+                font-size: 13px;
+                color: var(--primary);
+                font-weight: 500;
+            }
+            
+            .group-list-mobile {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .group-member-mobile {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px;
+                border-radius: var(--radius-md);
+            }
+            
+            .member-avatar-mobile {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--primary), var(--primary-light));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: 600;
+                font-size: 15px;
+            }
+            
+            .member-name-mobile {
+                font-weight: 500;
+                font-size: 15px;
+                margin-bottom: 2px;
+            }
+            
+            .member-role-mobile {
+                font-size: 13px;
+                color: var(--text-tertiary);
+            }
+            
+            .member-status-mobile {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: var(--success);
+            }
+            
+            .news-section-mobile {
+                display: block;
+                background-color: var(--surface);
+                border-radius: var(--radius-lg);
+                padding: 20px;
+                box-shadow: var(--shadow-sm);
+                border: 1px solid var(--border);
+                margin-bottom: 24px;
+            }
+            
+            .news-item-mobile {
+                padding: 16px 0;
+                border-bottom: 1px solid var(--border);
+            }
+            
+            .news-title-mobile {
+                font-weight: 600;
+                margin-bottom: 8px;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .news-badge-mobile {
+                font-size: 11px;
+                background-color: rgba(33, 150, 243, 0.1);
+                color: var(--info);
+                padding: 2px 8px;
+                border-radius: 12px;
+                font-weight: 600;
+            }
+            
+            .news-date-mobile {
+                font-size: 13px;
+                color: var(--text-tertiary);
+                margin-bottom: 8px;
+            }
+            
+            .news-text-mobile {
+                font-size: 14px;
+                color: var(--text-secondary);
+                line-height: 1.5;
+            }
+            
+            .calendar-section-mobile {
+                display: block;
+                background-color: var(--surface);
+                border-radius: var(--radius-lg);
+                padding: 20px;
+                box-shadow: var(--shadow-sm);
+                border: 1px solid var(--border);
+            }
+            
+            .calendar-header-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 16px;
+            }
+            
+            .calendar-current-mobile {
+                font-weight: 600;
+                font-size: 16px;
+                min-width: 140px;
+                text-align: center;
+            }
+            
+            .calendar-grid-mobile {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 4px;
+            }
+            
+            .calendar-date-mobile {
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: var(--radius-sm);
+                font-size: 15px;
+                font-weight: 500;
                 cursor: pointer;
             }
+            
+            .bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: var(--surface);
+                border-top: 1px solid var(--border);
+                justify-content: space-around;
+                padding: 8px 0;
+                z-index: 1000;
+                padding-bottom: calc(8px + var(--safe-area-inset-bottom));
+            }
+            
+            .bottom-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: var(--text-tertiary);
+                padding: 8px 12px;
+                border-radius: var(--radius-md);
+                flex: 1;
+                max-width: 80px;
+            }
+            
+            .bottom-nav-item.active {
+                color: var(--primary);
+            }
+            
+            .bottom-nav-icon {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+            
+            .bottom-nav-label {
+                font-size: 11px;
+                font-weight: 500;
+            }
+            
+            .fab {
+                display: flex;
+                position: fixed;
+                bottom: 80px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--primary), var(--primary-light));
+                color: white;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                box-shadow: var(--shadow-lg);
+                cursor: pointer;
+                z-index: 999;
+                border: none;
+            }
+            
+            /* Скрываем десктопные элементы */
+            .quick-actions,
+            .info-grid,
+            .news-section,
+            .calendar-section {
+                display: none;
+            }
         }
         
-        /* Улучшения для скролла на iOS */
-        .mobile-sidebar,
-        .mobile-nav-section {
-            -webkit-overflow-scrolling: touch;
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 76px 16px 80px;
+            }
+            
+            .actions-grid-mobile {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
-        /* Убираем выделение при тапе */
-        *:focus {
-            outline: none;
+        @media (max-width: 480px) {
+            .actions-grid-mobile {
+                grid-template-columns: 1fr;
+            }
         }
         
-        /* Улучшения для полей ввода на iOS */
-        input,
-        textarea,
-        select {
-            font-size: 16px; /* Предотвращает зумирование в iOS */
+        /* Улучшения для свайпов */
+        .swipe-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 100%;
+            z-index: 99;
         }
         
-        /* Стили для состояния загрузки */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
+        @media (min-width: 1025px) {
+            .swipe-area {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Сайдбар для ПК -->
+    <aside class="pc-sidebar" id="pc-sidebar">
+        <div class="logo-section">
+            <div class="logo" id="toggle-sidebar-btn">
+                ИР
+            </div>
+            <div class="logo-text">
+                <div class="university-short">ИРГУПС</div>
+                <div class="group-name">ПИ-21-1</div>
+            </div>
+        </div>
+        
+        <nav class="nav-section">
+            <div class="nav-title">Основное</div>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-page="home">
+                        <i class="nav-icon fas fa-home"></i>
+                        <span>Главная</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#schedule" class="nav-link" data-page="schedule">
+                        <i class="nav-icon fas fa-calendar-alt"></i>
+                        <span>Расписание</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#group" class="nav-link" data-page="group">
+                        <i class="nav-icon fas fa-users"></i>
+                        <span>Список группы</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#materials" class="nav-link" data-page="materials">
+                        <i class="nav-icon fas fa-book"></i>
+                        <span>Учебные материалы</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tasks" class="nav-link" data-page="tasks">
+                        <i class="nav-icon fas fa-tasks"></i>
+                        <span>Задания</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="nav-title">Дополнительно</div>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#chat" class="nav-link" data-page="chat">
+                        <i class="nav-icon fas fa-comments"></i>
+                        <span>Чат группы</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#progress" class="nav-link" data-page="progress">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <span>Успеваемость</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#documents" class="nav-link" data-page="documents">
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <span>Документы</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link" data-page="settings">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <span>Настройки</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#support" class="nav-link" data-page="support">
+                        <i class="nav-icon fas fa-question-circle"></i>
+                        <span>Поддержка</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="user-section">
+            <div class="user-avatar" id="user-profile-btn">АИ</div>
+            <div class="user-info">
+                <div class="user-name">Александр Иванов</div>
+                <div class="user-role">Студент</div>
+            </div>
+        </div>
+        
+        <div class="toggle-sidebar" id="toggle-sidebar-full">
+            <span>Свернуть меню</span>
+            <i class="fas fa-chevron-left"></i>
+        </div>
+    </aside>
+    
+    <!-- Область для свайпов (только для мобильных) -->
+    <div class="swipe-area" id="swipe-area"></div>
+    
     <!-- Мобильная верхняя панель -->
     <header class="mobile-header">
         <div class="mobile-header-left">
@@ -1064,601 +1511,912 @@
             </a>
             <a href="#support" class="mobile-nav-link" data-page="support">
                 <i class="mobile-nav-icon fas fa-question-circle"></i>
-                <span>Поддержка</span>
-            </a>
-            <a href="#logout" class="mobile-nav-link" id="mobile-logout-btn">
-                <i class="mobile-nav-icon fas fa-sign-out-alt"></i>
-                <span>Выйти</span>
-            </a>
-        </div>
-    </aside>
-    
-    <!-- Оверлей для меню -->
-    <div class="menu-overlay" id="menu-overlay"></div>
-    
-    <!-- Основной контент -->
-    <main class="main-content">
-        <!-- Поиск -->
-        <div class="mobile-search-container">
-            <i class="mobile-search-icon fas fa-search"></i>
-            <input type="text" class="mobile-search-input" placeholder="Поиск занятий, материалов, людей...">
-        </div>
-        
-        <!-- Быстрые действия -->
-        <section class="quick-actions-mobile">
-            <h2 class="section-title-mobile">
-                Быстрые действия
-                <a href="#all" class="section-link-mobile">
-                    Все
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </h2>
+                        <span>Поддержка</span>
+                    </a>
+                    <a href="#logout" class="mobile-nav-link" id="mobile-logout-btn">
+                        <i class="mobile-nav-icon fas fa-sign-out-alt"></i>
+                        <span>Выйти</span>
+                    </a>
+                </div>
+            </aside>
             
-            <div class="actions-grid-mobile">
-                <a href="#schedule" class="action-card-mobile" data-action="schedule">
-                    <div class="action-icon-mobile">
-                        <i class="fas fa-calendar-alt"></i>
+            <!-- Оверлей для меню -->
+            <div class="menu-overlay" id="menu-overlay"></div>
+            
+            <!-- Основной контент -->
+            <main class="main-content" id="main-content">
+                <!-- Для ПК -->
+                <div class="topbar">
+                    <h1 class="page-title" id="page-title">Главная</h1>
+                    
+                    <div class="actions">
+                        <div class="search-container">
+                            <i class="search-icon fas fa-search"></i>
+                            <input type="text" class="search-input" placeholder="Поиск..." id="search-input">
+                        </div>
+                        
+                        <button class="notification-btn" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <div class="notification-badge"></div>
+                        </button>
                     </div>
-                    <h3 class="action-title-mobile">Расписание</h3>
-                    <p class="action-desc-mobile">Занятия на неделю</p>
-                </a>
-                
-                <a href="#profile" class="action-card-mobile" data-action="profile">
-                    <div class="action-icon-mobile">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <h3 class="action-title-mobile">Профиль</h3>
-                    <p class="action-desc-mobile">Личный кабинет</p>
-                </a>
-                
-                <a href="#group-list" class="action-card-mobile" data-action="group">
-                    <div class="action-icon-mobile">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="action-title-mobile">Группа</h3>
-                    <p class="action-desc-mobile">24 студента</p>
-                </a>
-                
-                <a href="#support" class="action-card-mobile" data-action="support">
-                    <div class="action-icon-mobile">
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <h3 class="action-title-mobile">Помощь</h3>
-                    <p class="action-desc-mobile">Поддержка</p>
-                </a>
-            </div>
-        </section>
-        
-        <!-- Информационные карточки -->
-        <div class="info-grid-mobile">
-            <!-- Сегодняшние занятия -->
-            <div class="info-card-mobile">
-                <div class="info-card-header-mobile">
-                    <h3 class="info-card-title-mobile">Сегодня</h3>
-                    <span class="info-card-badge-mobile">2 пары</span>
                 </div>
                 
-                <div class="schedule-list">
-                    <div class="schedule-item-mobile">
-                        <div class="schedule-time-mobile">9:00</div>
-                        <div class="schedule-details-mobile">
-                            <div class="schedule-subject-mobile">Базы данных</div>
-                            <div class="schedule-teacher-mobile">Ковалева А.П.</div>
-                            <div class="schedule-room-mobile">Ауд. 312</div>
+                <div class="page-content">
+                    <!-- Десктопная версия -->
+                    <section class="quick-actions">
+                        <h2 class="section-title">
+                            Быстрые действия
+                            <a href="#all" class="section-link">
+                                Все разделы
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </h2>
+                        
+                        <div class="actions-grid">
+                            <a href="#schedule" class="action-card" data-action="schedule">
+                                <div class="action-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <h3 class="action-title">Расписание</h3>
+                                <p class="action-desc">Посмотреть расписание занятий на неделю</p>
+                            </a>
+                            
+                            <a href="#profile" class="action-card" data-action="profile">
+                                <div class="action-icon">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3 class="action-title">Мой профиль</h3>
+                                <p class="action-desc">Личная информация и настройки</p>
+                            </a>
+                            
+                            <a href="#group" class="action-card" data-action="group">
+                                <div class="action-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3 class="action-title">Список группы</h3>
+                                <p class="action-desc">Контакты одногруппников и куратора</p>
+                            </a>
+                            
+                            <a href="#support" class="action-card" data-action="support">
+                                <div class="action-icon">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <h3 class="action-title">Поддержка</h3>
+                                <p class="action-desc">Помощь по использованию сайта</p>
+                            </a>
+                        </div>
+                    </section>
+                    
+                    <div class="info-grid">
+                        <!-- Сегодняшние занятия -->
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <h3 class="info-card-title">Сегодняшние занятия</h3>
+                                <span class="info-card-badge">2 пары</span>
+                            </div>
+                            
+                            <div class="schedule-list">
+                                <div class="schedule-item">
+                                    <div class="schedule-time">9:00 - 10:30</div>
+                                    <div class="schedule-details">
+                                        <div class="schedule-subject">Базы данных</div>
+                                        <div class="schedule-teacher">Ковалева А.П.</div>
+                                        <div class="schedule-room">Аудитория 312</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="schedule-item">
+                                    <div class="schedule-time">11:00 - 12:30</div>
+                                    <div class="schedule-details">
+                                        <div class="schedule-subject">Веб-разработка</div>
+                                        <div class="schedule-teacher">Смирнов Д.В.</div>
+                                        <div class="schedule-room">Лаборатория 405</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Активные студенты -->
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <h3 class="info-card-title">Сейчас онлайн</h3>
+                                <span class="info-card-badge">8 человек</span>
+                            </div>
+                            
+                            <div class="group-list">
+                                <div class="group-member">
+                                    <div class="member-avatar">МП</div>
+                                    <div class="member-info">
+                                        <div class="member-name">Мария Петрова</div>
+                                        <div class="member-role">Староста группы</div>
+                                    </div>
+                                    <div class="member-status"></div>
+                                </div>
+                                
+                                <div class="group-member">
+                                    <div class="member-avatar">СК</div>
+                                    <div class="member-info">
+                                        <div class="member-name">Сергей Козлов</div>
+                                        <div class="member-role">Студент</div>
+                                    </div>
+                                    <div class="member-status"></div>
+                                </div>
+                                
+                                <div class="group-member">
+                                    <div class="member-avatar">АН</div>
+                                    <div class="member-info">
+                                        <div class="member-name">Анастасия Новикова</div>
+                                        <div class="member-role">Студент</div>
+                                    </div>
+                                    <div class="member-status offline"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="schedule-item-mobile">
-                        <div class="schedule-time-mobile">11:00</div>
-                        <div class="schedule-details-mobile">
-                            <div class="schedule-subject-mobile">Веб-разработка</div>
-                            <div class="schedule-teacher-mobile">Смирнов Д.В.</div>
-                            <div class="schedule-room-mobile">Лаб. 405</div>
+                    <!-- Последние новости (десктоп) -->
+                    <section class="news-section">
+                        <h2 class="section-title">
+                            Последние новости
+                            <a href="#all-news" class="section-link">
+                                Все новости
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </h2>
+                        
+                        <div class="news-list">
+                            <div class="news-item">
+                                <div class="news-title">
+                                    Изменение в расписании
+                                    <span class="news-badge">Важно</span>
+                                </div>
+                                <div class="news-date">Сегодня, 10:15</div>
+                                <p class="news-text">Занятие по математике переносится с четверга на пятницу, 2 пара.</p>
+                            </div>
+                            
+                            <div class="news-item">
+                                <div class="news-title">Собрание группы</div>
+                                <div class="news-date">Вчера, 16:30</div>
+                                <p class="news-text">Завтра в 14:00 состоится собрание группы в аудитории 215. Присутствие обязательно.</p>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Календарь (десктоп) -->
+                    <section class="calendar-section">
+                        <div class="calendar-header">
+                            <h3 class="section-title">Календарь</h3>
+                            
+                            <div class="calendar-nav">
+                                <button class="calendar-btn" id="prev-month">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <div class="calendar-current" id="current-month">Май 2023</div>
+                                <button class="calendar-btn" id="next-month">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- Дни календаря будут добавлены через JavaScript -->
+                        </div>
+                    </section>
+                    
+                    <!-- Мобильная версия (скрыта на ПК) -->
+                    <div class="mobile-search-container">
+                        <i class="mobile-search-icon fas fa-search"></i>
+                        <input type="text" class="mobile-search-input" placeholder="Поиск занятий, материалов, людей..." id="mobile-search-input">
+                    </div>
+                    
+                    <section class="quick-actions-mobile">
+                        <h2 class="section-title-mobile">
+                            Быстрые действия
+                            <a href="#all" class="section-link-mobile">
+                                Все
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </h2>
+                        
+                        <div class="actions-grid-mobile">
+                            <a href="#schedule" class="action-card-mobile" data-action="schedule">
+                                <div class="action-icon-mobile">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <h3 class="action-title-mobile">Расписание</h3>
+                                <p class="action-desc-mobile">Занятия на неделю</p>
+                            </a>
+                            
+                            <a href="#profile" class="action-card-mobile" data-action="profile">
+                                <div class="action-icon-mobile">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3 class="action-title-mobile">Профиль</h3>
+                                <p class="action-desc-mobile">Личный кабинет</p>
+                            </a>
+                            
+                            <a href="#group" class="action-card-mobile" data-action="group">
+                                <div class="action-icon-mobile">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3 class="action-title-mobile">Группа</h3>
+                                <p class="action-desc-mobile">24 студента</p>
+                            </a>
+                            
+                            <a href="#support" class="action-card-mobile" data-action="support">
+                                <div class="action-icon-mobile">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <h3 class="action-title-mobile">Помощь</h3>
+                                <p class="action-desc-mobile">Поддержка</p>
+                            </a>
+                        </div>
+                    </section>
+                    
+                    <div class="info-grid-mobile">
+                        <!-- Сегодняшние занятия -->
+                        <div class="info-card-mobile">
+                            <div class="info-card-header-mobile">
+                                <h3 class="info-card-title-mobile">Сегодня</h3>
+                                <span class="info-card-badge-mobile">2 пары</span>
+                            </div>
+                            
+                            <div class="schedule-list">
+                                <div class="schedule-item-mobile">
+                                    <div class="schedule-time-mobile">9:00</div>
+                                    <div class="schedule-details-mobile">
+                                        <div class="schedule-subject-mobile">Базы данных</div>
+                                        <div class="schedule-teacher-mobile">Ковалева А.П.</div>
+                                        <div class="schedule-room-mobile">Ауд. 312</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="schedule-item-mobile">
+                                    <div class="schedule-time-mobile">11:00</div>
+                                    <div class="schedule-details-mobile">
+                                        <div class="schedule-subject-mobile">Веб-разработка</div>
+                                        <div class="schedule-teacher-mobile">Смирнов Д.В.</div>
+                                        <div class="schedule-room-mobile">Лаб. 405</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Активные студенты -->
+                        <div class="info-card-mobile">
+                            <div class="info-card-header-mobile">
+                                <h3 class="info-card-title-mobile">Сейчас онлайн</h3>
+                                <span class="info-card-badge-mobile">8 чел.</span>
+                            </div>
+                            
+                            <div class="group-list-mobile">
+                                <div class="group-member-mobile">
+                                    <div class="member-avatar-mobile">МП</div>
+                                    <div class="member-info-mobile">
+                                        <div class="member-name-mobile">Мария Петрова</div>
+                                        <div class="member-role-mobile">Староста</div>
+                                    </div>
+                                    <div class="member-status-mobile"></div>
+                                </div>
+                                
+                                <div class="group-member-mobile">
+                                    <div class="member-avatar-mobile">СК</div>
+                                    <div class="member-info-mobile">
+                                        <div class="member-name-mobile">Сергей Козлов</div>
+                                        <div class="member-role-mobile">Студент</div>
+                                    </div>
+                                    <div class="member-status-mobile"></div>
+                                </div>
+                                
+                                <div class="group-member-mobile">
+                                    <div class="member-avatar-mobile">АН</div>
+                                    <div class="member-info-mobile">
+                                        <div class="member-name-mobile">Анастасия Новикова</div>
+                                        <div class="member-role-mobile">Студент</div>
+                                    </div>
+                                    <div class="member-status-mobile offline"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Последние новости (мобильные) -->
+                    <section class="news-section-mobile">
+                        <h2 class="section-title-mobile">
+                            Новости
+                            <a href="#all-news" class="section-link-mobile">
+                                Все
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </h2>
+                        
+                        <div class="news-list">
+                            <div class="news-item-mobile">
+                                <div class="news-title-mobile">
+                                    Изменение расписания
+                                    <span class="news-badge-mobile">Важно</span>
+                                </div>
+                                <div class="news-date-mobile">Сегодня, 10:15</div>
+                                <p class="news-text-mobile">Математика переносится на пятницу, 2 пара.</p>
+                            </div>
+                            
+                            <div class="news-item-mobile">
+                                <div class="news-title-mobile">Собрание группы</div>
+                                <div class="news-date-mobile">Вчера, 16:30</div>
+                                <p class="news-text-mobile">Завтра в 14:00 собрание в ауд. 215.</p>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Календарь (мобильные) -->
+                    <section class="calendar-section-mobile">
+                        <div class="calendar-header-mobile">
+                            <h3 class="section-title-mobile" style="margin: 0;">Календарь</h3>
+                            
+                            <div class="calendar-nav-mobile">
+                                <button class="calendar-btn-mobile" id="prev-month-mobile">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <div class="calendar-current-mobile" id="current-month-mobile">Май 2023</div>
+                                <button class="calendar-btn-mobile" id="next-month-mobile">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-grid-mobile" id="calendar-grid-mobile">
+                            <!-- Дни календаря будут добавлены через JavaScript -->
+                        </div>
+                    </section>
                 </div>
-            </div>
+            </main>
             
-            <!-- Активные студенты -->
-            <div class="info-card-mobile">
-                <div class="info-card-header-mobile">
-                    <h3 class="info-card-title-mobile">Сейчас онлайн</h3>
-                    <span class="info-card-badge-mobile">8 чел.</span>
-                </div>
-                
-                <div class="group-list-mobile">
-                    <div class="group-member-mobile">
-                        <div class="member-avatar-mobile">МП</div>
-                        <div class="member-info-mobile">
-                            <div class="member-name-mobile">Мария Петрова</div>
-                            <div class="member-role-mobile">Староста</div>
-                        </div>
-                        <div class="member-status-mobile"></div>
-                    </div>
-                    
-                    <div class="group-member-mobile">
-                        <div class="member-avatar-mobile">СК</div>
-                        <div class="member-info-mobile">
-                            <div class="member-name-mobile">Сергей Козлов</div>
-                            <div class="member-role-mobile">Студент</div>
-                        </div>
-                        <div class="member-status-mobile"></div>
-                    </div>
-                    
-                    <div class="group-member-mobile">
-                        <div class="member-avatar-mobile">АН</div>
-                        <div class="member-info-mobile">
-                            <div class="member-name-mobile">Анастасия Новикова</div>
-                            <div class="member-role-mobile">Студент</div>
-                        </div>
-                        <div class="member-status-mobile offline"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Последние новости -->
-        <section class="news-section-mobile">
-            <h2 class="section-title-mobile">
-                Новости
-                <a href="#all-news" class="section-link-mobile">
-                    Все
-                    <i class="fas fa-arrow-right"></i>
+            <!-- Нижняя навигация (только для мобильных) -->
+            <nav class="bottom-nav">
+                <a href="#home" class="bottom-nav-item active" data-nav="home">
+                    <i class="bottom-nav-icon fas fa-home"></i>
+                    <span class="bottom-nav-label">Главная</span>
                 </a>
-            </h2>
+                <a href="#schedule" class="bottom-nav-item" data-nav="schedule">
+                    <i class="bottom-nav-icon fas fa-calendar-alt"></i>
+                    <span class="bottom-nav-label">Расписание</span>
+                </a>
+                <a href="#chat" class="bottom-nav-item" data-nav="chat">
+                    <i class="bottom-nav-icon fas fa-comments"></i>
+                    <span class="bottom-nav-label">Чат</span>
+                </a>
+                <a href="#profile" class="bottom-nav-item" data-nav="profile">
+                    <i class="bottom-nav-icon fas fa-user"></i>
+                    <span class="bottom-nav-label">Профиль</span>
+                </a>
+            </nav>
             
-            <div class="news-list">
-                <div class="news-item-mobile">
-                    <div class="news-title-mobile">
-                        Изменение расписания
-                        <span class="news-badge-mobile">Важно</span>
-                    </div>
-                    <div class="news-date-mobile">Сегодня, 10:15</div>
-                    <p class="news-text-mobile">Математика переносится на пятницу, 2 пара.</p>
-                </div>
-                
-                <div class="news-item-mobile">
-                    <div class="news-title-mobile">Собрание группы</div>
-                    <div class="news-date-mobile">Вчера, 16:30</div>
-                    <p class="news-text-mobile">Завтра в 14:00 собрание в ауд. 215.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Календарь -->
-        <section class="calendar-section-mobile">
-            <div class="calendar-header-mobile">
-                <h3 class="section-title-mobile" style="margin: 0;">Календарь</h3>
-                
-                <div class="calendar-nav-mobile">
-                    <button class="calendar-btn-mobile" id="prev-month-mobile">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="calendar-current-mobile" id="current-month-mobile">Май 2023</div>
-                    <button class="calendar-btn-mobile" id="next-month-mobile">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
+            <!-- Плавающая кнопка (только для мобильных) -->
+            <button class="fab" id="fab-btn">
+                <i class="fas fa-plus"></i>
+            </button>
             
-            <div class="calendar-grid-mobile" id="calendar-grid-mobile">
-                <!-- Дни календаря будут добавлены через JavaScript -->
+            <!-- Уведомление -->
+            <div class="notification" id="notification">
+                <div class="notification-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="notification-text" id="notification-text">Текст уведомления</div>
             </div>
-        </section>
-    </main>
-    
-    <!-- Нижняя навигация -->
-    <nav class="bottom-nav">
-        <a href="#home" class="bottom-nav-item active" data-nav="home">
-            <i class="bottom-nav-icon fas fa-home"></i>
-            <span class="bottom-nav-label">Главная</span>
-        </a>
-        <a href="#schedule" class="bottom-nav-item" data-nav="schedule">
-            <i class="bottom-nav-icon fas fa-calendar-alt"></i>
-            <span class="bottom-nav-label">Расписание</span>
-        </a>
-        <a href="#chat" class="bottom-nav-item" data-nav="chat">
-            <i class="bottom-nav-icon fas fa-comments"></i>
-            <span class="bottom-nav-label">Чат</span>
-        </a>
-        <a href="#profile" class="bottom-nav-item" data-nav="profile">
-            <i class="bottom-nav-icon fas fa-user"></i>
-            <span class="bottom-nav-label">Профиль</span>
-        </a>
-    </nav>
-    
-    <!-- Плавающая кнопка -->
-    <button class="fab" id="fab-btn">
-        <i class="fas fa-plus"></i>
-    </button>
-    
-    <!-- Уведомление -->
-    <div class="mobile-notification" id="notification">
-        <div class="mobile-notification-icon">
-            <i class="fas fa-check"></i>
-        </div>
-        <div class="mobile-notification-content">
-            <div class="mobile-notification-title">Уведомление</div>
-            <div class="mobile-notification-text" id="notification-text">Текст уведомления</div>
-        </div>
-    </div>
 
-    <script>
-        // Управление мобильным меню
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileSidebar = document.getElementById('mobile-sidebar');
-        const menuOverlay = document.getElementById('menu-overlay');
-        
-        function openMenu() {
-            mobileSidebar.classList.add('active');
-            menuOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeMenu() {
-            mobileSidebar.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        mobileMenuBtn.addEventListener('click', openMenu);
-        menuOverlay.addEventListener('click', closeMenu);
-        
-        // Закрытие меню при клике на ссылку
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const page = this.getAttribute('data-page');
-                navigateToPage(page);
-                closeMenu();
-            });
-        });
-        
-        // Навигация по страницам
-        function navigateToPage(page) {
-            const pages = {
-                home: 'Главная',
-                schedule: 'Расписание',
-                group: 'Список группы',
-                materials: 'Учебные материалы',
-                tasks: 'Задания',
-                chat: 'Чат группы',
-                progress: 'Успеваемость',
-                documents: 'Документы',
-                settings: 'Настройки',
-                support: 'Поддержка'
-            };
-            
-            showNotification(`Переход в "${pages[page]}"`);
-            
-            // Обновляем активную ссылку в меню
-            document.querySelectorAll('.mobile-nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            document.querySelector(`.mobile-nav-link[data-page="${page}"]`).classList.add('active');
-            
-            // Обновляем активную ссылку в нижней навигации
-            document.querySelectorAll('.bottom-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            if (page === 'home') {
-                document.querySelector('.bottom-nav-item[data-nav="home"]').classList.add('active');
-            } else if (page === 'schedule') {
-                document.querySelector('.bottom-nav-item[data-nav="schedule"]').classList.add('active');
-            } else if (page === 'chat') {
-                document.querySelector('.bottom-nav-item[data-nav="chat"]').classList.add('active');
-            } else if (page === 'profile') {
-                document.querySelector('.bottom-nav-item[data-nav="profile"]').classList.add('active');
-            }
-        }
-        
-        // Управление нижней навигацией
-        document.querySelectorAll('.bottom-nav-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const nav = this.getAttribute('data-nav');
+            <script>
+                // Определяем, мобильное устройство или ПК
+                const isMobile = window.innerWidth <= 1024;
+                let sidebarState = 'expanded'; // 'expanded' или 'collapsed'
                 
-                // Обновляем активную ссылку
-                document.querySelectorAll('.bottom-nav-item').forEach(item => {
-                    item.classList.remove('active');
+                // Элементы для ПК
+                const pcSidebar = document.getElementById('pc-sidebar');
+                const mainContent = document.getElementById('main-content');
+                const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+                const toggleSidebarFull = document.getElementById('toggle-sidebar-full');
+                
+                // Элементы для мобильных
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                const mobileSidebar = document.getElementById('mobile-sidebar');
+                const menuOverlay = document.getElementById('menu-overlay');
+                const swipeArea = document.getElementById('swipe-area');
+                
+                // Управление сайдбаром на ПК
+                function togglePcSidebar() {
+                    if (sidebarState === 'expanded') {
+                        pcSidebar.classList.add('collapsed');
+                        mainContent.classList.add('sidebar-collapsed');
+                        sidebarState = 'collapsed';
+                        toggleSidebarFull.innerHTML = '<span>Развернуть меню</span><i class="fas fa-chevron-right"></i>';
+                    } else {
+                        pcSidebar.classList.remove('collapsed');
+                        mainContent.classList.remove('sidebar-collapsed');
+                        sidebarState = 'expanded';
+                        toggleSidebarFull.innerHTML = '<span>Свернуть меню</span><i class="fas fa-chevron-left"></i>';
+                    }
+                }
+                
+                if (toggleSidebarBtn) {
+                    toggleSidebarBtn.addEventListener('click', togglePcSidebar);
+                }
+                
+                if (toggleSidebarFull) {
+                    toggleSidebarFull.addEventListener('click', togglePcSidebar);
+                }
+                
+                // Управление мобильным меню
+                function openMobileMenu() {
+                    mobileSidebar.classList.add('active');
+                    menuOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+                
+                function closeMobileMenu() {
+                    mobileSidebar.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.addEventListener('click', openMobileMenu);
+                }
+                
+                // Исправление: оверлей теперь кликабельный
+                if (menuOverlay) {
+                    menuOverlay.addEventListener('click', closeMobileMenu);
+                }
+                
+                // Закрытие меню при клике на ссылку
+                document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const page = this.getAttribute('data-page');
+                        navigateToPage(page);
+                        closeMobileMenu();
+                    });
                 });
-                this.classList.add('active');
                 
-                // Навигация
-                if (nav === 'home') navigateToPage('home');
-                else if (nav === 'schedule') navigateToPage('schedule');
-                else if (nav === 'chat') navigateToPage('chat');
-                else if (nav === 'profile') navigateToPage('settings');
-            });
-        });
-        
-        // Быстрые действия
-        document.querySelectorAll('.action-card-mobile').forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                const action = this.getAttribute('data-action');
-                const actions = {
-                    schedule: 'Расписание занятий',
-                    profile: 'Личный кабинет',
-                    group: 'Список группы',
-                    support: 'Техническая поддержка'
-                };
+                // Свайп-жесты для мобильных
+                let touchStartX = 0;
+                let touchEndX = 0;
+                let touchStartY = 0;
+                let touchEndY = 0;
+                let isSwiping = false;
                 
-                // Эффект нажатия
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-                
-                showNotification(`Открываем: ${actions[action]}`);
-            });
-        });
-        
-        // Уведомления
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notification-text');
-        
-        function showNotification(text, type = 'success') {
-            notificationText.textContent = text;
-            
-            // Настройка цвета в зависимости от типа
-            const icon = notification.querySelector('.mobile-notification-icon');
-            if (type === 'success') {
-                icon.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
-                icon.innerHTML = '<i class="fas fa-check"></i>';
-            } else if (type === 'error') {
-                icon.style.backgroundColor = 'rgba(244, 67, 54, 0.1)';
-                icon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
-            } else if (type === 'info') {
-                icon.style.backgroundColor = 'rgba(33, 150, 243, 0.1)';
-                icon.innerHTML = '<i class="fas fa-info-circle"></i>';
-            }
-            
-            // Показываем уведомление
-            notification.classList.add('active');
-            
-            // Скрываем через 3 секунды
-            setTimeout(() => {
-                notification.classList.remove('active');
-            }, 3000);
-        }
-        
-        // Кнопка уведомлений в шапке
-        document.getElementById('mobile-notification-btn').addEventListener('click', () => {
-            showNotification('У вас 3 новых уведомления', 'info');
-        });
-        
-        // Выход из системы
-        document.getElementById('mobile-logout-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Подтверждение выхода
-            if (confirm('Вы уверены, что хотите выйти?')) {
-                showNotification('Выход из системы...', 'info');
-                setTimeout(() => {
-                    // В реальном приложении здесь был бы редирект
-                    showNotification('Вы вышли из системы', 'success');
-                    closeMenu();
-                }, 1500);
-            }
-        });
-        
-        // Плавающая кнопка действий
-        document.getElementById('fab-btn').addEventListener('click', () => {
-            // Показываем меню быстрых действий
-            showNotification('Быстрое действие: Добавить заметку', 'info');
-            
-            // Эффект нажатия
-            const fab = document.getElementById('fab-btn');
-            fab.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                fab.style.transform = '';
-            }, 150);
-        });
-        
-        // Поиск
-        const searchInput = document.querySelector('.mobile-search-input');
-        let searchTimeout;
-        
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            
-            if (this.value.trim()) {
-                searchTimeout = setTimeout(() => {
-                    showNotification(`Поиск: "${this.value}"`, 'info');
-                }, 500);
-            }
-        });
-        
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && this.value.trim()) {
-                showNotification(`Ищем: "${this.value}"`, 'info');
-                this.blur(); // Скрываем клавиатуру на мобильных
-            }
-        });
-        
-        // Календарь
-        const currentMonthEl = document.getElementById('current-month-mobile');
-        const prevMonthBtn = document.getElementById('prev-month-mobile');
-        const nextMonthBtn = document.getElementById('next-month-mobile');
-        const calendarGrid = document.getElementById('calendar-grid-mobile');
-        
-        let currentDate = new Date();
-        
-        function renderMobileCalendar(date) {
-            const year = date.getFullYear();
-            const month = date.getMonth();
-            
-            // Обновляем заголовок
-            const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
-                               'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-            currentMonthEl.textContent = `${monthNames[month]} ${year}`;
-            
-            // Очищаем календарь (кроме дней недели)
-            calendarGrid.innerHTML = '';
-            
-            // Добавляем дни недели
-            const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-            daysOfWeek.forEach(day => {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'calendar-day-mobile';
-                dayEl.textContent = day;
-                calendarGrid.appendChild(dayEl);
-            });
-            
-            // Первый день месяца
-            const firstDay = new Date(year, month, 1);
-            // Последний день месяца
-            const lastDay = new Date(year, month + 1, 0);
-            // День недели первого дня (0 - воскресенье, 1 - понедельник и т.д.)
-            let firstDayIndex = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-            // Последний день месяца
-            const lastDate = lastDay.getDate();
-            // Текущий день
-            const today = new Date();
-            const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
-            
-            // Пустые ячейки до первого дня месяца
-            for (let i = 0; i < firstDayIndex; i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.className = 'calendar-date-mobile';
-                calendarGrid.appendChild(emptyCell);
-            }
-            
-            // Дни месяца
-            for (let i = 1; i <= lastDate; i++) {
-                const dateCell = document.createElement('div');
-                dateCell.className = 'calendar-date-mobile';
-                dateCell.textContent = i;
-                
-                // Отмечаем текущий день
-                if (isCurrentMonth && i === today.getDate()) {
-                    dateCell.classList.add('current');
-                }
-                
-                // Отмечаем дни с событиями
-                if ([5, 12, 20].includes(i)) {
-                    dateCell.classList.add('event');
-                }
-                
-                // Добавляем обработчик клика
-                dateCell.addEventListener('click', () => {
-                    showNotification(`${i} ${monthNames[month]} ${year}`);
+                // Область для активации свайпа (левый край экрана)
+                if (swipeArea) {
+                    swipeArea.addEventListener('touchstart', function(e) {
+                        touchStartX = e.changedTouches[0].screenX;
+                        touchStartY = e.changedTouches[0].screenY;
+                        isSwiping = true;
+                    }, { passive: true });
                     
-                    // Эффект нажатия
-                    dateCell.style.transform = 'scale(0.9)';
-                    setTimeout(() => {
-                        dateCell.style.transform = '';
-                    }, 150);
+                    swipeArea.addEventListener('touchmove', function(e) {
+                        if (!isSwiping) return;
+                        
+                        touchEndX = e.changedTouches[0].screenX;
+                        touchEndY = e.changedTouches[0].screenY;
+                        
+                        // Проверяем, что свайп преимущественно горизонтальный
+                        const deltaX = touchEndX - touchStartX;
+                        const deltaY = Math.abs(touchEndY - touchStartY);
+                        
+                        // Если свайп достаточно горизонтальный и вправо
+                        if (deltaX > 30 && deltaY < 50) {
+                            openMobileMenu();
+                            isSwiping = false;
+                        }
+                    }, { passive: true });
+                    
+                    swipeArea.addEventListener('touchend', function() {
+                        isSwiping = false;
+                    }, { passive: true });
+                }
+                
+                // Также добавляем свайп для закрытия меню по всему экрану
+                document.addEventListener('touchstart', function(e) {
+                    // Если меню открыто, можно свайпом закрыть
+                    if (mobileSidebar.classList.contains('active')) {
+                        touchStartX = e.changedTouches[0].screenX;
+                        touchStartY = e.changedTouches[0].screenY;
+                        isSwiping = true;
+                    }
+                }, { passive: true });
+                
+                document.addEventListener('touchmove', function(e) {
+                    if (!isSwiping || !mobileSidebar.classList.contains('active')) return;
+                    
+                    touchEndX = e.changedTouches[0].screenX;
+                    touchEndY = e.changedTouches[0].screenY;
+                    
+                    const deltaX = touchStartX - touchEndX; // Для закрытия свайп влево
+                    const deltaY = Math.abs(touchEndY - touchStartY);
+                    
+                    // Если свайп влево и достаточно горизонтальный
+                    if (deltaX > 50 && deltaY < 50) {
+                        closeMobileMenu();
+                        isSwiping = false;
+                    }
+                }, { passive: true });
+                
+                document.addEventListener('touchend', function() {
+                    isSwiping = false;
+                }, { passive: true });
+                
+                // Навигация по страницам
+                function navigateToPage(page) {
+                    const pages = {
+                        home: 'Главная',
+                        schedule: 'Расписание',
+                        group: 'Список группы',
+                        materials: 'Учебные материалы',
+                        tasks: 'Задания',
+                        chat: 'Чат группы',
+                        progress: 'Успеваемость',
+                        documents: 'Документы',
+                        settings: 'Настройки',
+                        support: 'Поддержка'
+                    };
+                    
+                    showNotification(`Переход в "${pages[page]}"`);
+                    
+                    // Обновляем заголовок страницы
+                    const pageTitle = document.getElementById('page-title');
+                    if (pageTitle) {
+                        pageTitle.textContent = pages[page];
+                    }
+                    
+                    // Обновляем активную ссылку в меню (и для ПК, и для мобильных)
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    const pcLink = document.querySelector(`.nav-link[data-page="${page}"]`);
+                    const mobileLink = document.querySelector(`.mobile-nav-link[data-page="${page}"]`);
+                    
+                    if (pcLink) pcLink.classList.add('active');
+                    if (mobileLink) mobileLink.classList.add('active');
+                    
+                    // Обновляем активную ссылку в нижней навигации
+                    document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    if (page === 'home') {
+                        const homeNav = document.querySelector('.bottom-nav-item[data-nav="home"]');
+                        if (homeNav) homeNav.classList.add('active');
+                    } else if (page === 'schedule') {
+                        const scheduleNav = document.querySelector('.bottom-nav-item[data-nav="schedule"]');
+                        if (scheduleNav) scheduleNav.classList.add('active');
+                    } else if (page === 'chat') {
+                        const chatNav = document.querySelector('.bottom-nav-item[data-nav="chat"]');
+                        if (chatNav) chatNav.classList.add('active');
+                    } else if (page === 'settings' || page === 'profile') {
+                        const profileNav = document.querySelector('.bottom-nav-item[data-nav="profile"]');
+                        if (profileNav) profileNav.classList.add('active');
+                    }
+                }
+                
+                // Навигация для ПК
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const page = this.getAttribute('data-page');
+                        navigateToPage(page);
+                    });
                 });
                 
-                calendarGrid.appendChild(dateCell);
-            }
-        }
-        
-        // Инициализация календаря
-        renderMobileCalendar(currentDate);
-        
-        // Навигация по месяцам
-        prevMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderMobileCalendar(currentDate);
-            
-            // Эффект нажатия
-            prevMonthBtn.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                prevMonthBtn.style.transform = '';
-            }, 150);
-        });
-        
-        nextMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderMobileCalendar(currentDate);
-            
-            // Эффект нажатия
-            nextMonthBtn.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                nextMonthBtn.style.transform = '';
-            }, 150);
-        });
-        
-        // Имитация активных пользователей
-        function updateOnlineStatus() {
-            const statusElements = document.querySelectorAll('.member-status-mobile');
-            statusElements.forEach(status => {
-                // Случайным образом меняем статус
-                if (Math.random() > 0.3) {
-                    status.classList.remove('offline');
-                } else {
-                    status.classList.add('offline');
+                // Управление нижней навигацией
+                document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const nav = this.getAttribute('data-nav');
+                        
+                        // Обновляем активную ссылку
+                        document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // Навигация
+                        if (nav === 'home') navigateToPage('home');
+                        else if (nav === 'schedule') navigateToPage('schedule');
+                        else if (nav === 'chat') navigateToPage('chat');
+                        else if (nav === 'profile') navigateToPage('settings');
+                    });
+                });
+                
+                // Быстрые действия
+                document.querySelectorAll('.action-card, .action-card-mobile').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const action = this.getAttribute('data-action');
+                        const actions = {
+                            schedule: 'Расписание занятий',
+                            profile: 'Личный кабинет',
+                            group: 'Список группы',
+                            support: 'Техническая поддержка'
+                        };
+                        
+                        // Эффект нажатия
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                        
+                        showNotification(`Открываем: ${actions[action]}`);
+                    });
+                });
+                
+                // Уведомления
+                const notification = document.getElementById('notification');
+                const notificationText = document.getElementById('notification-text');
+                
+                function showNotification(text, type = 'success') {
+                    notificationText.textContent = text;
+                    
+                    // Настройка цвета в зависимости от типа
+                    const icon = notification.querySelector('.notification-icon');
+                    if (type === 'success') {
+                        icon.style.backgroundColor = 'rgba(76, 175, 80, 0.2)';
+                        icon.innerHTML = '<i class="fas fa-check"></i>';
+                    } else if (type === 'error') {
+                        icon.style.backgroundColor = 'rgba(244, 67, 54, 0.2)';
+                        icon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+                    } else if (type === 'info') {
+                        icon.style.backgroundColor = 'rgba(33, 150, 243, 0.2)';
+                        icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+                    }
+                    
+                    // Показываем уведомление
+                    notification.classList.add('active');
+                    
+                    // Скрываем через 3 секунды
+                    setTimeout(() => {
+                        notification.classList.remove('active');
+                    }, 3000);
                 }
-            });
-        }
-        
-        // Обновляем статусы каждые 30 секунд
-        setInterval(updateOnlineStatus, 30000);
-        
-        // Обработка свайпов для меню
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-        
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const swipeDistance = touchEndX - touchStartX;
-            
-            // Свайп справа налево (закрытие меню)
-            if (swipeDistance < -swipeThreshold && mobileSidebar.classList.contains('active')) {
-                closeMenu();
-            }
-            // Свайп слева направо (открытие меню)
-            else if (swipeDistance > swipeThreshold && !mobileSidebar.classList.contains('active') && touchStartX < 50) {
-                openMenu();
-            }
-        }
-        
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', () => {
-            // Приветственное сообщение
-            setTimeout(() => {
-                showNotification('Добро пожаловать, Александр!', 'success');
-            }, 1000);
-            
-            // Обновляем время в расписании
-            const now = new Date();
-            const hours = now.getHours();
-            
-            if (hours >= 9 && hours < 10) {
-                const firstClass = document.querySelector('.schedule-time-mobile:first-child');
-                firstClass.innerHTML = `<span style="color: var(--primary); font-weight: 700;">9:00</span>`;
-            } else if (hours >= 11 && hours < 12) {
-                const secondClass = document.querySelectorAll('.schedule-time-mobile')[1];
-                secondClass.innerHTML = `<span style="color: var(--primary); font-weight: 700;">11:00</span>`;
-            }
-            
-            // Оптимизация для iOS
-            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                document.body.classList.add('ios-device');
-            }
-        });
-        
-        // Предотвращение масштабирования при двойном тапе
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
-    </script>
-</body>
-</html>
+                
+                // Кнопка уведомлений
+                const notificationBtn = document.getElementById('notification-btn');
+                const mobileNotificationBtn = document.getElementById('mobile-notification-btn');
+                
+                if (notificationBtn) {
+                    notificationBtn.addEventListener('click', () => {
+                        showNotification('У вас 3 новых уведомления', 'info');
+                    });
+                }
+                
+                if (mobileNotificationBtn) {
+                    mobileNotificationBtn.addEventListener('click', () => {
+                        showNotification('У вас 3 новых уведомления', 'info');
+                    });
+                }
+                
+                // Выход из системы
+                const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+                if (mobileLogoutBtn) {
+                    mobileLogoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Подтверждение выхода
+                        if (confirm('Вы уверены, что хотите выйти?')) {
+                            showNotification('Выход из системы...', 'info');
+                            setTimeout(() => {
+                                showNotification('Вы вышли из системы', 'success');
+                                closeMobileMenu();
+                            }, 1500);
+                        }
+                    });
+                }
+                
+                // Плавающая кнопка действий
+                const fabBtn = document.getElementById('fab-btn');
+                if (fabBtn) {
+                    fabBtn.addEventListener('click', () => {
+                        showNotification('Быстрое действие: Добавить заметку', 'info');
+                        
+                        // Эффект нажатия
+                        fabBtn.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            fabBtn.style.transform = '';
+                        }, 150);
+                    });
+                }
+                
+                // Поиск
+                const searchInput = document.getElementById('search-input');
+                const mobileSearchInput = document.getElementById('mobile-search-input');
+                
+                function handleSearch(input) {
+                    if (input.value.trim()) {
+                        showNotification(`Поиск: "${input.value}"`, 'info');
+                        input.blur();
+                    }
+                }
+                
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            handleSearch(this);
+                        }
+                    });
+                }
+                
+                if (mobileSearchInput) {
+                    mobileSearchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            handleSearch(this);
+                        }
+                    });
+                }
+                
+                // Календарь (общая функция)
+                function renderCalendar(containerId, monthElementId, prevBtnId, nextBtnId) {
+                    const container = document.getElementById(containerId);
+                    const monthElement = document.getElementById(monthElementId);
+                    const prevBtn = document.getElementById(prevBtnId);
+                    const nextBtn = document.getElementById(nextBtnId);
+                    
+                    if (!container || !monthElement) return;
+                    
+                    let currentDate = new Date();
+                    
+                    function render() {
+                        const year = currentDate.getFullYear();
+                        const month = currentDate.getMonth();
+                        
+                        // Обновляем заголовок
+                        const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
+                                          'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+                        monthElement.textContent = `${monthNames[month]} ${year}`;
+                        
+                        // Очищаем контейнер
+                        if (containerId === 'calendar-grid') {
+                            // Для десктопной версии добавляем дни недели
+                            container.innerHTML = '';
+                            const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                            daysOfWeek.forEach(day => {
+                                const dayEl = document.createElement('div');
+                                dayEl.className = 'calendar-day';
+                                dayEl.textContent = day;
+                                container.appendChild(dayEl);
+                            });
+                        } else {
+                            container.innerHTML = '';
+                        }
+                        
+                        // Первый день месяца
+                        const firstDay = new Date(year, month, 1);
+                        // Последний день месяца
+                        const lastDay = new Date(year, month + 1, 0);
+                        // День недели первого дня
+                        let firstDayIndex = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+                        // Последний день месяца
+                        const lastDate = lastDay.getDate();
+                        // Текущий день
+                        const today = new Date();
+                        const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+                        
+                        // Пустые ячейки до первого дня месяца
+                        for (let i = 0; i < firstDayIndex; i++) {
+                            const emptyCell = document.createElement('div');
+                            emptyCell.className = containerId === 'calendar-grid' ? 'calendar-date' : 'calendar-date-mobile';
+                            container.appendChild(emptyCell);
+                        }
+                        
+                        // Дни месяца
+                        for (let i = 1; i <= lastDate; i++) {
+                            const dateCell = document.createElement('div');
+                            dateCell.className = containerId === 'calendar-grid' ? 'calendar-date' : 'calendar-date-mobile';
+                            dateCell.textContent = i;
+                            
+                            // Отмечаем текущий день
+                            if (isCurrentMonth && i === today.getDate()) {
+                                dateCell.classList.add('current');
+                            }
+                            
+                            // Отмечаем дни с событиями
+                            if ([5, 12, 20].includes(i)) {
+                                if (containerId === 'calendar-grid') {
+                                    dateCell.classList.add('event');
+                                } else {
+                                    dateCell.classList.add('event');
+                                }
+                            }
+                            
+                            // Добавляем обработчик клика
+                            dateCell.addEventListener('click', () => {
+                                showNotification(`${i} ${monthNames[month]} ${year}`);
+                            });
+                            
+                            container.appendChild(dateCell);
+                        }
+                    }
+                    
+                    // Инициализация
+                    render();
+                    
+                    // Навигация по месяцам
+                    if (prevBtn) {
+                        prevBtn.addEventListener('click', () => {
+                            currentDate.setMonth(currentDate.getMonth() - 1);
+                            render();
+                        });
+                    }
+                    
+                    if (nextBtn) {
+                        nextBtn.addEventListener('click', () => {
+                            currentDate.setMonth(currentDate.getMonth() + 1);
+                            render();
+                        });
+                    }
+                }
+                
+                // Инициализация календарей
+                renderCalendar('calendar-grid', 'current-month', 'prev-month', 'next-month');
+                renderCalendar('calendar-grid-mobile', 'current-month-mobile', 'prev-month-mobile', 'next-month-mobile');
+                
+                // Имитация активных пользователей
+                function updateOnlineStatus() {
+                    const statusElements = document.querySelectorAll('.member-status, .member-status-mobile');
+                    statusElements.forEach(status => {
+                        // Случайным образом меняем статус
+                        if (Math.random() > 0.3) {
+                            status.classList.remove('offline');
+                        } else {
+                            status.classList.add('offline');
+                        }
+                    });
+                }
+                
+                // Обновляем статусы каждые 30 секунд
+                setInterval(updateOnlineStatus, 30000);
+                
+                // Адаптация при изменении размера окна
+                function handleResize() {
+                    const currentIsMobile = window.innerWidth <= 1024;
+                    
+                    if (currentIsMobile !== isMobile) {
+                        // Перезагружаем страницу при сильном изменении размера
+                        // В реальном приложении можно использовать более сложную логику
+                        window.location.reload();
+                    }
+                }
+                
+                // Дебаунс для resize
+                let resizeTimeout;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(handleResize, 250);
+                });
+                
+                // Инициализация при загрузке
+                document.addEventListener('DOMContentLoaded', () => {
+                    // Приветственное сообщение
+                    setTimeout(() => {
+                        showNotification('Добро пожаловать, Александр!', 'success');
+                    }, 1000);
+                    
+                    // Обновляем время в расписании
+                    const now = new Date();
+                    const hours = now.getHours();
+                    
+                    if (hours >= 9 && hours < 10) {
+                        const timeElements = document.querySelectorAll('.schedule-time, .schedule-time-mobile');
+                        if (timeElements[0]) {
+                            timeElements[0].innerHTML = `<span style="color: var(--primary); font-weight: 700;">${timeElements[0].textContent}</span>`;
+                        }
+                    } else if (hours >= 11 && hours < 12) {
+                        const timeElements = document.querySelectorAll('.schedule-time, .schedule-time-mobile');
+                        if (timeElements[1]) {
+                            timeElements[1].innerHTML = `<span style="color: var(--primary); font-weight: 700;">${timeElements[1].textContent}</span>`;
+                        }
+                    }
+                });
+            </script>
+        </body>
+        </html>
